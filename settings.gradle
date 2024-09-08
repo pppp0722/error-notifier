@@ -1,2 +1,5 @@
 rootProject.name = 'error-notifier'
 include 'producer'
+include 'consumer'
+include 'common'
+

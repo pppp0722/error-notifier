@@ -1,5 +1,7 @@
 package com.ilhwanlee.producer.notification.adapter.out.queue;
 
+import com.ilhwanlee.common.domain.NotiInfo;
+import com.ilhwanlee.common.util.KafkaUtils;
 import com.ilhwanlee.producer.notification.adapter.out.queue.kafka.KafkaProducer;
 import com.ilhwanlee.producer.notification.application.out.EnqueueNotiPort;
 import com.ilhwanlee.producer.notification.domain.Severity;
@@ -18,10 +20,7 @@ public class QueueAdapter implements EnqueueNotiPort {
     public void enqueueNoti(List<User> users, Severity severity, String message) {
         String errorMessage = severity + " " + message;
         users.stream()
-                .map(user -> new NotiDto(user.getToken(), user.getChannelId(), errorMessage))
-                .forEach(notiDto -> kafkaProducer.sendMessage("error-noti", notiDto));
+                .map(user -> new NotiInfo(user.getToken(), user.getChannelId(), errorMessage))
+                .forEach(notiInfo -> kafkaProducer.sendMessage(KafkaUtils.NOTI_TOPIC, notiInfo));
     }
-}
-
-record NotiDto(String token, String channelId, String message) {
 }

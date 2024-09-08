@@ -1,6 +1,6 @@
 package com.ilhwanlee.producer.common.web.filter.logging;
 
-import com.ilhwanlee.producer.common.util.LoggingUtils;
+import com.ilhwanlee.common.util.LoggingUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

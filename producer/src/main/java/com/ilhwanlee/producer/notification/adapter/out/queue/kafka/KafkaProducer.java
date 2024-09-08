@@ -2,7 +2,7 @@ package com.ilhwanlee.producer.notification.adapter.out.queue.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ilhwanlee.producer.common.util.LoggingUtils;
+import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.producer.common.web.exception.CustomException;
 import com.ilhwanlee.producer.common.web.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

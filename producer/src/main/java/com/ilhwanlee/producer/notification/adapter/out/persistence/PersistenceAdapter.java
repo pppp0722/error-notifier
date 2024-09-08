@@ -2,12 +2,12 @@ package com.ilhwanlee.producer.notification.adapter.out.persistence;
 
 import com.ilhwanlee.producer.common.web.exception.CustomException;
 import com.ilhwanlee.producer.common.web.exception.ErrorCode;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.entity.NotiGroupEntity;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.entity.NotiGroupUserEntity;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.entity.UserEntity;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.repository.NotiGroupRepository;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.repository.NotiGroupUserRepository;
-import com.ilhwanlee.producer.notification.adapter.out.persistence.repository.UserRepository;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.entity.NotiGroupEntity;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.entity.NotiGroupUserEntity;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.entity.UserEntity;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.repository.NotiGroupRepository;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.repository.NotiGroupUserRepository;
+import com.ilhwanlee.producer.notification.adapter.out.persistence.jpa.repository.UserRepository;
 import com.ilhwanlee.producer.notification.application.out.CrudNotiGroupPort;
 import com.ilhwanlee.producer.notification.domain.NotiGroup;
 import com.ilhwanlee.producer.notification.domain.Target;

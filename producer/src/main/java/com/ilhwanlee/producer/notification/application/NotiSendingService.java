@@ -1,5 +1,6 @@
 package com.ilhwanlee.producer.notification.application;
 
+import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.producer.notification.application.in.SendNotiUseCase;
 import com.ilhwanlee.producer.notification.application.in.command.SendNotiCommand;
 import com.ilhwanlee.producer.notification.application.out.CrudNotiGroupPort;
@@ -24,9 +25,13 @@ public class NotiSendingService implements SendNotiUseCase {
     public int sendNoti(SendNotiCommand command) {
         Target target = TargetResolver.resolve(command.target());
         List<User> targetUsers = crudNotiGroupPort.getTargetUsers(target);
+
         if (!targetUsers.isEmpty()) {
             enqueueNotiPort.enqueueNoti(targetUsers, command.severity(), command.message());
         }
+
+        LoggingUtils.logInfo("message", "Enqueue noti was successful.");
+
         return targetUsers.size();
     }
 }

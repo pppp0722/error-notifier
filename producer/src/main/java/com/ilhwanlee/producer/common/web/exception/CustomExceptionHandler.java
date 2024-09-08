@@ -1,6 +1,6 @@
 package com.ilhwanlee.producer.common.web.exception;
 
-import com.ilhwanlee.producer.common.util.LoggingUtils;
+import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.producer.common.web.aop.CommonResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

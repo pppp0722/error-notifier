@@ -24,10 +24,22 @@ subprojects {
         mavenCentral()
     }
 
+    configurations {
+        all {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            exclude group: 'ch.qos.logback', module: 'logback-classic'
+            exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        }
+    }
+
     dependencies {
         /* Spring */
         implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        /* Logging */
+        implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
         /* Kafka */
         implementation 'org.springframework.kafka:spring-kafka'

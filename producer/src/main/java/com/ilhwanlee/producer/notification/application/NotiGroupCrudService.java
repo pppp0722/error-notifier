@@ -1,6 +1,6 @@
 package com.ilhwanlee.producer.notification.application;
 
-import com.ilhwanlee.producer.common.util.LoggingUtils;
+import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.producer.notification.application.in.CrudNotiGroupUseCase;
 import com.ilhwanlee.producer.notification.application.in.command.SaveNotiGroupCommand;
 import com.ilhwanlee.producer.notification.application.in.command.SubscribeNotiGroupCommand;

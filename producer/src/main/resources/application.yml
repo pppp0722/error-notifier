@@ -17,9 +17,5 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0
     locations: classpath:db/migration, classpath:db/callback
-  kafka:
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   jackson:
     default-property-inclusion: non_null

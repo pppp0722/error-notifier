@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: consumer
+  profiles:
+    default: local
+    active: local
+  cloud:
+    openfeign:
+      client:
+        config:
+          slack:
+            url: https://slack.com
+            connect-timeout: 5000
+            read-timeout: 5000

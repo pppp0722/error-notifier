@@ -1,0 +1,13 @@
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.3"
+    }
+}
+
+dependencies {
+    /* Common Module */
+    implementation project(':common')
+
+    /* Spring */
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
