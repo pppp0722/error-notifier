@@ -11,6 +11,8 @@ public enum ErrorCode {
     // 4XX
     BAD_REQUEST(400, "Bad Request",
             "The request is invalid or cannot be processed."),
+    INVALID_SEVERITY(400, "Bad Request",
+            "Severity should be one of the following values: high, normal, low."),
     UNKNOWN_NOTI_GROUP(404, "Not Found",
             "The requested noti group does not exist."),
     UNKNOWN_USER(404, "Not Found",
