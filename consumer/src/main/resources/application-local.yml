@@ -1,12 +1,12 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
   cloud:
     openfeign:
       client:
         config:
           slack:
-            url: http://localhost:8082
+            url: http://mockup:8080
             connect-timeout: 5000
             read-timeout: 5000
 
