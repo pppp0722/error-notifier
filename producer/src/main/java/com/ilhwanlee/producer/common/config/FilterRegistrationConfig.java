@@ -1,6 +1,7 @@
 package com.ilhwanlee.producer.common.config;
 
-import com.ilhwanlee.producer.common.web.filter.GlobalTransactionIdFilter;
+import com.ilhwanlee.producer.common.web.filter.gtid.GlobalTransactionIdFilter;
+import com.ilhwanlee.producer.common.web.filter.logging.HttpLoggingFilter;
 import jakarta.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,14 @@ public class FilterRegistrationConfig {
         FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new GlobalTransactionIdFilter());
         bean.setOrder(1);
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<Filter> registerLoggingFilter() {
+        FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new HttpLoggingFilter());
+        bean.setOrder(2);
         return bean;
     }
 }

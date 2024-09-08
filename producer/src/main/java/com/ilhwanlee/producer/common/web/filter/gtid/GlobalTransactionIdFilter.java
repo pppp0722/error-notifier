@@ -1,4 +1,4 @@
-package com.ilhwanlee.producer.common.web.filter;
+package com.ilhwanlee.producer.common.web.filter.gtid;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

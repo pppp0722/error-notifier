@@ -57,9 +57,9 @@ public class LoggingUtils {
         log(logLevel, map);
     }
 
-    private static void log(LogLevel logLevel, Map<String, String> map) {
+    public static void log(LogLevel logLevel, Map<String, String> map) {
         String message = map.entrySet().stream()
-                .map(e -> String.format("\"%s\"=\"%s\"", e.getKey(), e.getValue()))
+                .map(e -> String.format("\"%s\"=\"%s\"", e.getKey(), e.getValue() != null ? e.getValue() : ""))
                 .collect(Collectors.joining(" "));
 
         logInternal(logLevel, message);
