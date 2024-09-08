@@ -15,6 +15,7 @@ public class FilterRegistrationConfig {
         FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new GlobalTransactionIdFilter());
         bean.setOrder(1);
+        bean.addUrlPatterns("/v1/*");
         return bean;
     }
 
@@ -23,6 +24,7 @@ public class FilterRegistrationConfig {
         FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new HttpLoggingFilter());
         bean.setOrder(2);
+        bean.addUrlPatterns("/v1/*");
         return bean;
     }
 }

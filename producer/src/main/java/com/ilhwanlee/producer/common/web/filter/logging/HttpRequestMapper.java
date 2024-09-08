@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -24,14 +25,14 @@ class HttpRequestMapper {
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
 
-        if (queryString != null && !queryString.isEmpty()) {
+        if (StringUtils.isNotEmpty(queryString)) {
             requestUri += "?" + request.getQueryString();
         }
 
         return Map.of(
                 "request_method", request.getMethod(),
                 "request_uri", requestUri,
-                "request_content_type", request.getContentType()
+                "request_content_type", StringUtils.defaultString(request.getContentType())
         );
     }
 

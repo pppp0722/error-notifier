@@ -5,6 +5,7 @@ import com.ilhwanlee.consumer.notification.adapter.out.web.dto.NotiSendingReques
 import com.ilhwanlee.consumer.notification.adapter.out.web.slack.SlackClient;
 import com.ilhwanlee.consumer.notification.application.out.SendNotiPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,10 @@ public class RestAdapter implements SendNotiPort {
 
     @Override
     public void sendNoti(NotiInfo notiInfo) {
-        slackClient.sendMessage(
-                MediaType.APPLICATION_JSON_VALUE,
-                "Bearer " + notiInfo.token(),
-                new NotiSendingRequestDto(notiInfo.channelId(), notiInfo.message())
-        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("Authorization", "Bearer " + notiInfo.token());
+
+        slackClient.sendMessage(headers, new NotiSendingRequestDto(notiInfo.channelId(), notiInfo.message()));
     }
 }

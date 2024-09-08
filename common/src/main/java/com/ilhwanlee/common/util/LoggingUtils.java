@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.logging.LogLevel;
@@ -59,7 +60,7 @@ public class LoggingUtils {
 
     public static void log(LogLevel logLevel, Map<String, String> map) {
         String message = map.entrySet().stream()
-                .map(e -> String.format("\"%s\"=\"%s\"", e.getKey(), e.getValue() != null ? e.getValue() : ""))
+                .map(e -> String.format("\"%s\"=\"%s\"", e.getKey(), StringUtils.defaultString(e.getValue())))
                 .collect(Collectors.joining(" "));
 
         logInternal(logLevel, message);

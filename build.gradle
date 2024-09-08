@@ -50,6 +50,9 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         testCompileOnly 'org.projectlombok:lombok:1.18.26'
         testAnnotationProcessor 'org.projectlombok:lombok'
+
+        /* Util */
+        implementation 'org.apache.commons:commons-lang3:3.13.0'
     }
 
     test {

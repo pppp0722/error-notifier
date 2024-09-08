@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -22,7 +23,7 @@ class HttpResponseMapper {
 
     private static Map<String, String> getInfoMap(ContentCachingResponseWrapper response) {
         return Map.of("response_status", String.valueOf(response.getStatus()),
-                "response_content_type", response.getContentType());
+                "response_content_type", StringUtils.defaultString(response.getContentType()));
     }
 
     private static Map<String, String> getHeaderMap(ContentCachingResponseWrapper response) {

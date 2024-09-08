@@ -1,7 +1,6 @@
 package com.ilhwanlee.producer.notification.adapter.out.queue.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ilhwanlee.common.domain.NotiInfo;
 import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.producer.common.web.exception.CustomException;
 import com.ilhwanlee.producer.common.web.exception.ErrorCode;
@@ -13,15 +12,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper;
+    private final KafkaTemplate<String, NotiInfo> kafkaTemplate;
 
-    public void sendMessage(String topic, Object object) {
+    public void sendMessage(String topic, NotiInfo notiInfo) {
         try {
-            kafkaTemplate.send(topic, objectMapper.writeValueAsString(object));
-        } catch (JsonProcessingException e) {
-            LoggingUtils.logError("Unable to parse Object to JSON", e);
-            throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+            kafkaTemplate.send(topic, notiInfo);
         } catch (Exception e) {
             LoggingUtils.logError("Failed to produce message to Kafka topic.", e);
             throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
