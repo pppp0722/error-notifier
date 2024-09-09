@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class NotiGroupCrudService implements CrudNotiGroupUseCase {
+class NotiGroupCrudService implements CrudNotiGroupUseCase {
 
     private final CrudNotiGroupPort crudNotiGroupPort;
 

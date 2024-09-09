@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PersistenceAdapter implements CrudNotiGroupPort {
+class PersistenceAdapter implements CrudNotiGroupPort {
 
     private final NotiGroupRepository notiGroupRepository;
     private final UserRepository userRepository;
@@ -48,6 +48,7 @@ public class PersistenceAdapter implements CrudNotiGroupPort {
         if (notiGroupUserRepository.existsByNotiGroupIdAndUserId(notiGroupId, userId)) {
             throw new CustomException(ErrorCode.SUBSCRIPTION_EXISTS);
         }
+
         notiGroupUserRepository.save(NotiGroupUserEntity.of(notiGroupId, userId));
     }
 
@@ -58,43 +59,40 @@ public class PersistenceAdapter implements CrudNotiGroupPort {
 
     @Override
     public List<User> getTargetUsers(Target target) {
-        if (target.isAll()) {
+        if (target.isAllUsers()) {
             return userRepository.findAll().stream().map(UserEntity::toDomain).toList();
         }
 
+        List<String> usernames = target.getUsernames();
+        List<String> notiGroupNames = target.getNotiGroupNames();
         Set<UUID> targetUserIds = new HashSet<>();
         List<User> targetUsers = new ArrayList<>();
 
-        if (!target.userNames().isEmpty()) {
-            List<User> users =
-                    userRepository.findAllByNameIn(target.userNames()).stream().map(UserEntity::toDomain).toList();
-
-            addUsersIfAbsent(targetUserIds, targetUsers, users);
+        if (!usernames.isEmpty()) {
+            List<UserEntity> userEntities = userRepository.findAllByNameIn(usernames);
+            addUsersIfAbsent(targetUserIds, targetUsers, userEntities);
         }
 
-        if (!target.notiGroupNames().isEmpty()) {
-            List<UUID> notiGroupIds = notiGroupRepository.findAllByNameIn(target.notiGroupNames()).stream()
+        if (!notiGroupNames.isEmpty()) {
+            List<UUID> notiGroupIds = notiGroupRepository.findAllByNameIn(notiGroupNames).stream()
                     .map(NotiGroupEntity::getId)
                     .toList();
             List<UUID> userIds = notiGroupUserRepository.findAllByNotiGroupIdIn(notiGroupIds).stream()
                     .map(NotiGroupUserEntity::getUserId)
                     .distinct()
                     .toList();
-            List<User> users = userRepository.findAllByIdIn(userIds).stream()
-                    .map(UserEntity::toDomain)
-                    .toList();
-
-            addUsersIfAbsent(targetUserIds, targetUsers, users);
+            List<UserEntity> userEntities = userRepository.findAllByIdIn(userIds);
+            addUsersIfAbsent(targetUserIds, targetUsers, userEntities);
         }
 
         return targetUsers;
     }
 
-    private void addUsersIfAbsent(Set<UUID> targetUserIds, List<User> targetUsers, List<User> users) {
-        for (User user : users) {
-            if (!targetUserIds.contains(user.getId())) {
-                targetUsers.add(user);
-                targetUserIds.add(user.getId());
+    private void addUsersIfAbsent(Set<UUID> targetUserIds, List<User> targetUsers, List<UserEntity> userEntities) {
+        for (UserEntity userEntity : userEntities) {
+            if (!targetUserIds.contains(userEntity.getId())) {
+                targetUsers.add(userEntity.toDomain());
+                targetUserIds.add(userEntity.getId());
             }
         }
     }

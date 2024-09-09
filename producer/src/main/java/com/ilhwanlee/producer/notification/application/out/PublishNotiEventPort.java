@@ -4,7 +4,7 @@ import com.ilhwanlee.producer.notification.domain.Severity;
 import com.ilhwanlee.producer.notification.domain.User;
 import java.util.List;
 
-public interface EnqueueNotiPort {
+public interface PublishNotiEventPort {
 
-    void enqueueNoti(List<User> users, Severity severity, String message);
+    void publishNotiEvent(List<User> users, Severity severity, String message);
 }

@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @AutoConfigureMockMvc
 @EmbeddedKafka(partitions = 1, ports = 9093)
-class NotiSendingControllerTest extends BaseSpringBootTest {
+class NotiEventPublishingControllerTest extends BaseSpringBootTest {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TargetResolverTest {
 
     @Test
-    @DisplayName("target을 받아 user와 group으로 분리할 수 있다.")
+    @DisplayName("target을 받아 User와 NotiGroup으로 분리할 수 있다.")
     void resolve_whenNotContainsAll_returnNames() {
         // given
         List<String> targetList = List.of("@username1", "@username2", "@@noti_group_name1");
@@ -18,9 +18,9 @@ class TargetResolverTest {
         Target target = TargetResolver.resolve(targetList);
 
         // then
-        assertThat(target.isAll()).isFalse();
-        assertThat(target.userNames()).hasSize(2);
-        assertThat(target.notiGroupNames()).hasSize(1);
+        assertThat(target.isAllUsers()).isFalse();
+        assertThat(target.getUsernames()).hasSize(2);
+        assertThat(target.getNotiGroupNames()).hasSize(1);
     }
 
     @Test
@@ -33,8 +33,8 @@ class TargetResolverTest {
         Target target = TargetResolver.resolve(targetList);
 
         // then
-        assertThat(target.isAll()).isTrue();
-        assertThat(target.userNames()).isEmpty();
-        assertThat(target.notiGroupNames()).isEmpty();
+        assertThat(target.isAllUsers()).isTrue();
+        assertThat(target.getUsernames()).isEmpty();
+        assertThat(target.getNotiGroupNames()).isEmpty();
     }
 }

@@ -62,7 +62,7 @@ class NotiGroupCrudControllerTest extends BaseSpringBootTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"notiGroupId\":\"22222222-2222-2222-2222-222222222222\","
                                 + "\"userId\":\"22222222-2222-2222-2222-222222222222\"}"))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @ParameterizedTest
@@ -112,7 +112,7 @@ class NotiGroupCrudControllerTest extends BaseSpringBootTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"notiGroupId\":\"11111111-1111-1111-1111-111111111111\","
                                 + "\"userId\":\"11111111-1111-1111-1111-111111111111\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @ParameterizedTest
