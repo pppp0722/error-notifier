@@ -9,7 +9,7 @@
 1. `common` : 모듈 공통 Utils, DTO 정의
 2. `producer` : 장애 알림 전송 요청을 받아 대상자 및 외부 서비스 요청에 필요한 token, channelId를 조회하여 알림 전송 event 발행
 3. `consumer` : 알림 전송 event를 구독하여 외부 서비스 메시지 전송 API 호출
-4. `mockup` : 외부 서비스 mockup
+4. `mockup` : 외부 서비스(Slack) mockup
 
 <br>
 
