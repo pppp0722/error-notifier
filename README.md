@@ -124,6 +124,7 @@ producer
 - GTID를 포함한 request, response 및 각종 에러 및 정보 logging
 - AOP를 사용한 공통 Response Format 처리
 - CustomException, ExceptionHandler를 사용한 Exception 처리 단순화
+- Swagger를 사용한 API 문서 자동화 및 API 명세 표준화
 - 통합 테스트 및 유닛 테스트
 
 <br>
