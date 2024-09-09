@@ -4,6 +4,9 @@ import com.ilhwanlee.producer.notification.application.in.command.SaveNotiGroupC
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * 알림 그룹 생성 Request DTO
+ */
 public record NotiGroupSaveRequestDto(
         @NotNull(message = "Noti group name must not be null.")
         @Size(min = 5, max = 30, message = "Noti group name must be between 5 and 30 characters.")

@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 알림 그룹 생성, 가입 및 탈퇴 CRUD Service
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor

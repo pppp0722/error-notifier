@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 에러 알림 전송 대상을 식별하여 Slack API 호출에 필요한 정보를 조회하여
+ * Message Queue에 발행하기 위한 Controller
+ */
 @RestController
 @RequestMapping("/v1/alerts")
 @RequiredArgsConstructor

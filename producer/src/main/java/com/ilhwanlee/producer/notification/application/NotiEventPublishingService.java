@@ -14,6 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 에러 알림 전송 대상을 식별하여 Slack API 호출에 필요한 정보를 조회하여
+ * Message Queue에 발행하기 위한 Service
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,10 +28,12 @@ class NotiEventPublishingService implements PublishNotiEventUseCase {
 
     @Override
     public int publishNotiEvent(PublishNotiEventCommand command) {
+        // target을 읽어 에러 알림 전송 대상을 쉽게 조회하기 위해 분류 후 대상 정보 조회
         Target target = TargetResolver.resolve(command.target());
         List<User> targetUsers = getTargetUsers(target);
         int targetUsersSize = targetUsers.size();
 
+        // 에러 알림 전송 대상이 존재하는 경우 Message Queue에 발행
         if (targetUsersSize >= 1) {
             publishNotiEventPort.publishNotiEvent(targetUsers, command.severity(), command.message());
         }

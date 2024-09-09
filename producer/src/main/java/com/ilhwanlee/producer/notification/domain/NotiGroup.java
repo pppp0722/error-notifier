@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 알림 그룹 Domain
+ */
 @AllArgsConstructor
 @Builder
 @Getter

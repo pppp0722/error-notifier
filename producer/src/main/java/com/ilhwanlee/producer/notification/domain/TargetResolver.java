@@ -5,6 +5,10 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+/**
+ * ["@all", "@username1", "@@noti_group_name1"] 과 같은 target 정보에서
+ * 전체 대상 여부, userNames, notiGroupNames로 분류한 Target을 생성하기 위한 Class
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TargetResolver {
 
@@ -15,6 +19,7 @@ public class TargetResolver {
     private static final String ALL_TAG = "@all";
 
     public static Target resolve(List<String> target) {
+        // target에 "@all"이 포함되어 있으면 전체 대상
         if (isAllUsers(target)) {
             return Target.ofAllUsers();
         }
@@ -27,6 +32,7 @@ public class TargetResolver {
                 continue;
             }
 
+            // "@@"이 포함되어 있으면 notiGroupNames, "@"이 포함되어 있으면 usernames로 분류
             if (tag.length() >= MIN_USERNAME_LENGTH_WITH_TAG && tag.startsWith(NOTI_GROUP_TAG)) {
                 notiGroupNames.add(tag.substring(NOTI_GROUP_TAG.length()));
             } else if (tag.length() >= MIN_NOTI_GROUP_NAME_LENGTH_WITH_TAG && tag.startsWith(USER_TAG)) {

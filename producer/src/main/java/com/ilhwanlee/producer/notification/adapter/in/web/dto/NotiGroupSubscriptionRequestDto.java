@@ -4,6 +4,9 @@ import com.ilhwanlee.producer.notification.application.in.command.SubscribeNotiG
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
+/**
+ * 알림 그룹 가입 Request DTO
+ */
 public record NotiGroupSubscriptionRequestDto(
         @NotNull(message = "Group id must not be null.")
         UUID notiGroupId,

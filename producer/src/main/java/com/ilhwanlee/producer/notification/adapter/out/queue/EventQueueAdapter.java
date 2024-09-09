@@ -10,6 +10,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ * 장애 알림 Message를 발행하기 위한 Message Queue Adapter
+ */
 @Component
 @RequiredArgsConstructor
 class EventQueueAdapter implements PublishNotiEventPort {

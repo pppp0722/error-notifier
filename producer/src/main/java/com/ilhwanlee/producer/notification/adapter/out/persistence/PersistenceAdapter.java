@@ -20,6 +20,9 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ * 알림 그룹 생성, 가입 및 탈퇴 데이터 저장 및 알림 전송 대상 정보 조회를 위한 영속성 Adapter
+ */
 @Component
 @RequiredArgsConstructor
 class PersistenceAdapter implements CrudNotiGroupPort {

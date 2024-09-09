@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+/**
+ * 알림 그룹 생성, 가입 및 탈퇴 CRUD Controller
+ */
 @RestController
 @RequestMapping("/v1/noti-groups")
 @RequiredArgsConstructor

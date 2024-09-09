@@ -7,6 +7,9 @@ import com.ilhwanlee.producer.notification.domain.Severity;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
+/**
+ * 장애 알림 전송 Message 발행 Request DTO
+ */
 public record NotiEventPublishingRequestDto(
         @NotEmpty(message = "Target should not be empty and must have at least one element.")
         List<String> target,
