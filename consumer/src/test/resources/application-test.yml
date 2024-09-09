@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9093
+
+logging:
+  config: classpath:log4j2-test.xml

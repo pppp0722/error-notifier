@@ -10,4 +10,7 @@ dependencies {
 
     /* Spring */
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    /* Mock Server */
+    testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock:4.0.4'
 }

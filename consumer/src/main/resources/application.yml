@@ -15,3 +15,6 @@ spring:
             url: https://slack.com
             connect-timeout: 5000
             read-timeout: 5000
+
+logging:
+  config: classpath:log4j2-local.xml

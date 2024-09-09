@@ -16,13 +16,14 @@ public class FeignClientConfig {
     @Bean
     ErrorDecoder errorDecoder() {
         return (methodKey, response) -> {
+            String message = "An error occurred during the request";
             LoggingUtils.logError(
-                    "message", "An error occurred during the request.",
+                    "message", message,
                     "response_status", String.valueOf(response.status()),
                     "response_body", readResponseBody(response)
             );
 
-            return new RuntimeException();
+            return new RuntimeException(message);
         };
     }
 
