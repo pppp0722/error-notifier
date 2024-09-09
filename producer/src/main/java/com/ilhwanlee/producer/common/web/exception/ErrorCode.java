@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * CustomException에 담아 CustomExceptionHandler에서 Response를 생성하기 위한 Enum
+ */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum ErrorCode {

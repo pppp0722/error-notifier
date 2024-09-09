@@ -14,6 +14,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
+/**
+ * 트러블슈팅을 위해 Request 및 Response를 logging하는 Filter
+ */
 @RequiredArgsConstructor
 public class HttpLoggingFilter extends OncePerRequestFilter {
 

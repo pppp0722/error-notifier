@@ -8,6 +8,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * CustomException, ValidationException 등을 캐치해 Error Response하기 위한 ExceptionHandler Class
+ */
 @RestControllerAdvice
 public class CustomExceptionHandler {
 

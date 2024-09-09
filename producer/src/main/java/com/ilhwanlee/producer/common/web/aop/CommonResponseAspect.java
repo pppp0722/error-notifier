@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Response 포맷의 일관성 및 httpMesage 등 정보 부여를 위한 공통 Response AOP
+ */
 @Aspect
 @Component
 class CommonResponseAspect {

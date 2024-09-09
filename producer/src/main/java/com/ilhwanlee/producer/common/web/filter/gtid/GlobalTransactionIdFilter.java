@@ -9,6 +9,9 @@ import java.util.UUID;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * 에러 발생 시 Tracing을 위해 GTID를 부여하는 Filter
+ */
 public class GlobalTransactionIdFilter extends OncePerRequestFilter {
 
 
