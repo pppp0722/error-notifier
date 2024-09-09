@@ -49,13 +49,15 @@ docker compose up
 - 장애 발생 시 Kafka에 적재된 데이터는 손실되지 않아 재처리가 가능합니다.
 - Producer 모듈은 Slack 등 외부 서비스의 병목과 관계 없이 알림 대상 및 정보를 조회하여 이벤트를 발행하여 처리량을 늘릴 수 있습니다.
 - 각 모듈의 독립성이 증가하며 scale out이 용이합니다.
-- 다른 서비스가 event를 구독하여 확장할 수 있습니다.
+- 추가적인 서비스를 추가해 event를 구독하여 확장 가능합니다.
 
 <br>
 
 ---
 
 ## 소프트웨어 아키텍처
+
+![hexagonal-architecture](image/hexagonal-architecture.png)
 
 클린 아키텍처를 지향하기 위하여 **헥사고날 아키텍처**를 사용했으며 **모든 의존성 방향은 Domain**으로 흐릅니다.
 
@@ -66,7 +68,34 @@ docker compose up
 
 만약 외부 의존성의 변경 혹은 로직의 변경이 필요하다면 adpater만 갈아 끼우거나, adapter의 코드만 수정합니다.
 
+간략한 디렉토리 구조는 다음과 같습니다. (producer 모듈 예시)
 
+```
+producer
+├── common
+│   ├── config
+│   └── web
+│       ├── aop
+│       ├── exception
+│       └── filter
+└── notification
+    ├── adapter
+    │   ├── in
+    │   │   └── web
+    │   │       └── dto
+    │   └── out
+    │       ├── persistence
+    │       │   └── jpa
+    │       │       ├── entity
+    │       │       └── repository
+    │       └── queue
+    │           └── kafka
+    ├── application
+    │   ├── in
+    │   │   └── command
+    │   └── out
+    └── domain
+```
 
 <br>
 
@@ -85,6 +114,17 @@ docker compose up
 ---
 
 ## 주요 라이브러리 및 오픈소스
+
+<br>
+
+---
+
+## 기타 구현
+
+- GTID를 포함한 request, response 및 각종 에러 및 정보 logging
+- AOP를 사용한 공통 Response Format 처리
+- CustomException, ExceptionHandler를 사용한 Exception 처리 단순화
+- 통합 테스트 및 유닛 테스트
 
 <br>
 
