@@ -17,6 +17,8 @@
 
 ## 실행 방법
 
+로컬 실행 환경을 Docker Compose로 구성하여,
+
 Docker 실행 후 프로젝트 root 디렉토리(`/error-notifier`)에서 다음 명령어를 차례로 입력하여 실행할 수 있습니다.
 
 ```
