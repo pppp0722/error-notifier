@@ -34,7 +34,7 @@ docker compose up
 - Language : `Java 21 (LTS)`
 - Framework : `Spring Boot 3.3.3`, `JUnit5`
 - DB : `H2`, `Spring Data JPA`, `Flyway`
-- ETC : `Kafka`, `Log4J2`, `OpenFeign`, `Docker`
+- ETC : `Kafka`, `Log4J2`, `OpenFeign`, `Docker`, `Swagger`
 
 <br>
 
@@ -57,7 +57,7 @@ docker compose up
 
 ## 소프트웨어 아키텍처
 
-![hexagonal-architecture](image/hexagonal-architecture.png)
+![hexagonal-architecture](readmesource/hexagonal-architecture.png)
 
 클린 아키텍처를 지향하기 위하여 **헥사고날 아키텍처**를 사용했으며 **모든 의존성 방향은 Domain**으로 흐릅니다.
 
@@ -109,11 +109,87 @@ producer
 
 ## API 명세
 
+> Swagger UI : 실행 후 http://localhost:8080/swagger-ui/index.html# 접속
+> 
+> Open API 명세 : [Open API 3.0.1 명세](readmesource/open-api.md)
+
+<br>
+
+### POST /v1/noti-groups
+Request : application/json
+```json
+{
+  "name": "string",
+  "desc": "string"
+}
+```
+Response : 200 OK application/json
+```json
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string",
+  "desc": "string",
+  "users": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "token": "string",
+      "channelId": "string"
+    }
+  ]
+}
+```
+
+<br>
+
+### POST /v1/noti-groups/subscribe
+Request : application/json
+```json
+{
+  "notiGroupId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+```
+Response : 200 OK
+
+<br>
+
+### POST /v1/noti-groups/unsubscribe
+Request : application/json
+```json
+{
+  "notiGroupId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+```
+Response : 200 OK
+
+<br>
+
+### POST /v1/alerts
+Request : application/json
+```json
+{
+  "target": [
+    "string"
+  ],
+  "severity": "string",
+  "message": "string"
+}
+```
+Response : 200 OK application/json
+```json
+{
+  "userCount": 0
+}
+```
+
 <br>
 
 ---
 
-## 주요 라이브러리 및 오픈소스
+## 사용한 주요 라이브러리 및 오픈소스와 사용 목적
+
 
 <br>
 
@@ -124,7 +200,6 @@ producer
 - GTID를 포함한 request, response 및 각종 에러 및 정보 logging
 - AOP를 사용한 공통 Response Format 처리
 - CustomException, ExceptionHandler를 사용한 Exception 처리 단순화
-- Swagger를 사용한 API 문서 자동화 및 API 명세 표준화
 - 통합 테스트 및 유닛 테스트
 
 <br>
