@@ -11,6 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.logging.LogLevel;
 
+/**
+ * 로그를 쉽게 쿼리할 수 있도록 Map 형태로 로깅하도록 도와주는 Util Class
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoggingUtils {
 

@@ -9,6 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
+/**
+ * 에러 알림 전송을 위해 Slack API를 호출하기 위한 Adapter
+ */
 @Component
 @RequiredArgsConstructor
 public class RestAdapter implements SendNotiPort {

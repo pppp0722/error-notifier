@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * 에러 알림 전송 정보를 구독하는 Consumer
+ */
 @Component
 @RequiredArgsConstructor
 public class KafkaConsumer {
