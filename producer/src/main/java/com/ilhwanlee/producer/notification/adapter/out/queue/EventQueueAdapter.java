@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class QueueAdapter implements PublishNotiEventPort {
+class EventQueueAdapter implements PublishNotiEventPort {
 
     private final KafkaProducer kafkaProducer;
 

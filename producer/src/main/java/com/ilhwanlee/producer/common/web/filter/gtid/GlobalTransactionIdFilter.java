@@ -17,9 +17,11 @@ public class GlobalTransactionIdFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String gtId = request.getHeader("X-Global-Transaction-Id");
+
         if (gtId == null || gtId.isBlank()) {
             gtId = UUID.randomUUID().toString();
         }
+
         ThreadContext.put("GT_ID", gtId);
 
         filterChain.doFilter(request, response);
