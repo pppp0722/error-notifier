@@ -22,9 +22,10 @@ class NotiEventPublishingControllerTest extends BaseSpringBootTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'{\"target\":[\"@test_name2\",\"@@test_name1\"],\"severity\":\"normal\",\"message\":\"test message\"}', 2",
-            "'{\"target\":[\"@@test_name1\"],\"severity\":\"high\",\"message\":\"test message\"}', 1",
-            "'{\"target\":[\"@all\", \"@test_name1\"],\"severity\":\"low\",\"message\":\"test message\"}', 2",
+            "'{\"target\":[\"@user_name2\",\"@@group_name1\"],\"severity\":\"normal\",\"message\":\"test message\"}', 2",
+            "'{\"target\":[\"@@group_name1\"],\"severity\":\"high\",\"message\":\"test message\"}', 1",
+            "'{\"target\":[\"@all\", \"@user_name1\"],\"severity\":\"low\",\"message\":\"test message\"}', 2",
+            "'{\"target\":[\"@user_name1\", \"@@group_name1\"],\"severity\":\"low\",\"message\":\"test message\"}', 1",
             "'{\"target\":[\"@unknown_name\"],\"severity\":\"low\",\"message\":\"test message\"}', 0",
             "'{\"target\":[\"@@unknown_name\"],\"severity\":\"low\",\"message\":\"test message\"}', 0",
     })
@@ -41,9 +42,9 @@ class NotiEventPublishingControllerTest extends BaseSpringBootTest {
     @CsvSource({
             "'{\"severity\":\"normal\",\"message\":\"test message\"}'",
             "'{\"target\":[],\"severity\":\"normal\",\"message\":\"test message\"}'",
-            "'{\"target\":[\"@@test_name1\"],\"message\":\"test message\"}'",
-            "'{\"target\":[\"@@test_name1\"],\"severity\":\"unknown_severity\",\"message\":\"test message\"}'",
-            "'{\"target\":[\"@all\", \"@test_name1\"],\"severity\":\"low\"}'"
+            "'{\"target\":[\"@@group_name1\"],\"message\":\"test message\"}'",
+            "'{\"target\":[\"@@group_name1\"],\"severity\":\"unknown_severity\",\"message\":\"test message\"}'",
+            "'{\"target\":[\"@all\", \"@user_name1\"],\"severity\":\"low\"}'"
     })
     @DisplayName("발송 대상을 조회하여 Queue에 넣을 때 잘못된 요청은 400을 응답할 수 있다.")
     void save_whenInputIsInvalid_responseBadRequest(String content) throws Exception {

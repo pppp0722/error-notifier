@@ -13,10 +13,9 @@ import com.ilhwanlee.producer.notification.domain.NotiGroup;
 import com.ilhwanlee.producer.notification.domain.Target;
 import com.ilhwanlee.producer.notification.domain.User;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -62,41 +61,24 @@ class PersistenceAdapter implements CrudNotiGroupPort {
 
     @Override
     public List<User> getTargetUsers(Target target) {
+        // 모든 User 대상이면 전부 조회
         if (target.isAllUsers()) {
-            return userRepository.findAll().stream().map(UserEntity::toDomain).toList();
-        }
-
-        List<String> usernames = target.getUsernames();
-        List<String> notiGroupNames = target.getNotiGroupNames();
-        Set<UUID> targetUserIds = new HashSet<>();
-        List<User> targetUsers = new ArrayList<>();
-
-        if (!usernames.isEmpty()) {
-            List<UserEntity> userEntities = userRepository.findAllByNameIn(usernames);
-            addUsersIfAbsent(targetUserIds, targetUsers, userEntities);
-        }
-
-        if (!notiGroupNames.isEmpty()) {
-            List<UUID> notiGroupIds = notiGroupRepository.findAllByNameIn(notiGroupNames).stream()
-                    .map(NotiGroupEntity::getId)
+            return userRepository.findAll().stream()
+                    .map(UserEntity::toDomain)
                     .toList();
-            List<UUID> userIds = notiGroupUserRepository.findAllByNotiGroupIdIn(notiGroupIds).stream()
-                    .map(NotiGroupUserEntity::getUserId)
-                    .distinct()
-                    .toList();
-            List<UserEntity> userEntities = userRepository.findAllByIdIn(userIds);
-            addUsersIfAbsent(targetUserIds, targetUsers, userEntities);
         }
 
-        return targetUsers;
-    }
+        // userNames, notiGroupNames로 조회 후 User가 중복되지 않도록 distinct 처리
+        Stream<User> usersByUsernames = target.getUsernames().isEmpty() ? Stream.empty() :
+                userRepository.findAllByNameIn(target.getUsernames()).stream()
+                        .map(UserEntity::toDomain);
 
-    private void addUsersIfAbsent(Set<UUID> targetUserIds, List<User> targetUsers, List<UserEntity> userEntities) {
-        for (UserEntity userEntity : userEntities) {
-            if (!targetUserIds.contains(userEntity.getId())) {
-                targetUsers.add(userEntity.toDomain());
-                targetUserIds.add(userEntity.getId());
-            }
-        }
+        Stream<User> usersByNotiGroupNames = target.getNotiGroupNames().isEmpty() ? Stream.empty() :
+                userRepository.findAllByNotiGroupNameIn(target.getNotiGroupNames()).stream()
+                        .map(UserEntity::toDomain);
+
+        return Stream.concat(usersByUsernames, usersByNotiGroupNames)
+                .distinct()
+                .toList();
     }
 }
