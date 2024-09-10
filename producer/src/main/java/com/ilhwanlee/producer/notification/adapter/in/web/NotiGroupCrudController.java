@@ -4,6 +4,7 @@ import com.ilhwanlee.producer.notification.adapter.in.web.dto.NotiGroupSaveReque
 import com.ilhwanlee.producer.notification.adapter.in.web.dto.NotiGroupSubscriptionRequestDto;
 import com.ilhwanlee.producer.notification.application.in.CrudNotiGroupUseCase;
 import com.ilhwanlee.producer.notification.domain.NotiGroup;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +30,7 @@ class NotiGroupCrudController {
     private final CrudNotiGroupUseCase useCase;
 
     @PostMapping
+    @Operation(summary = "알림 그룹 생성", description = "요청한 정보로 알림 그룹 생성")
     @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<NotiGroup> save(@Valid @RequestBody NotiGroupSaveRequestDto requestDto) {
         NotiGroup notiGroup = useCase.save(requestDto.toCommand());
@@ -42,6 +44,7 @@ class NotiGroupCrudController {
     }
 
     @PostMapping("/subscribe")
+    @Operation(summary = "알림 그룹 가입", description = "사용자가 알림 그룹에 가입")
     @ApiResponse(responseCode = "204", description = "No Content")
     public ResponseEntity<Void> subscribe(@Valid @RequestBody NotiGroupSubscriptionRequestDto requestDto) {
         useCase.subscribe(requestDto.toCommand());
@@ -49,7 +52,7 @@ class NotiGroupCrudController {
     }
 
     @DeleteMapping("/unsubscribe")
-    @ApiResponse(responseCode = "204", description = "No Content")
+    @Operation(summary = "알림 그룹 탈퇴", description = "사용자가 알림 그룹에서 탈퇴")
     public ResponseEntity<Void> unsubscribe(@Valid @RequestBody NotiGroupSubscriptionRequestDto requestDto) {
         useCase.unsubscribe(requestDto.toCommand());
         return ResponseEntity.noContent().build();
