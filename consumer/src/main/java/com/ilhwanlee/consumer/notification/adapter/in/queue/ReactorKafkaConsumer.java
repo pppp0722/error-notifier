@@ -7,6 +7,8 @@ import com.ilhwanlee.common.util.LoggingUtils;
 import com.ilhwanlee.consumer.notification.application.in.SendNotiUseCase;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.kafka.receiver.KafkaReceiver;
@@ -18,13 +20,14 @@ import reactor.kafka.receiver.ReceiverRecord;
  */
 @Component
 @RequiredArgsConstructor
-public class ReactorKafkaConsumer {
+public class ReactorKafkaConsumer implements ApplicationRunner {
 
     private final SendNotiUseCase sendNotiUseCase;
     private final ReceiverOptions<String, NotiInfo> receiverOptions;
     private final ObjectMapper objectMapper;
 
-    private void startConsuming() {
+    @Override
+    public void run(ApplicationArguments args) {
         KafkaReceiver.create(receiverOptions)
                 .receive()
                 .concatMap(this::processMessage)

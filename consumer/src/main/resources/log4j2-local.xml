@@ -3,7 +3,7 @@
 <Configuration status="INFO">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS XX}{GMT+9} gt_id:%X{GT_ID} %-5level - %msg%n"/>
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS XX}{GMT+9} %-5level - %msg%n"/>
         </Console>
     </Appenders>
 
