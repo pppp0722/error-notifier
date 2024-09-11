@@ -330,7 +330,7 @@ Response : 200 OK application/json
 
 ### Spring WebFlux
 
-외부 서비스 호출에 중점적인 Consumer 모듈의 특성을 고려하여 성능 향상 및 자원의 효율성을 위해 WebFlux를 사용했습니다.
+외부 서비스 호출에 중점적인 Consumer 모듈의 특성을 고려하여 비동기 I/O를 사용한 성능 향상 및 자원의 효율성을 위해 WebFlux를 사용했습니다.
 
 ### Flyway
 
