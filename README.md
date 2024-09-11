@@ -80,7 +80,7 @@ VALUES ('11111111-1111-1111-1111-111111111111', '11111111-1111-1111-1111-1111111
 
 <br>
 
-다음 curl을 실행하여 정상적으로 에러 알림이 발송하는지 테스트할 수 있습니다.
+다음 curl을 실행하여 정상적으로 에러 알림 전송 API를 테스트할 수 있습니다.
 ```
 curl --location 'http://localhost:8080/v1/alerts' \
 --header 'Content-Type: application/json' \
@@ -192,7 +192,7 @@ DB는 장애 알림 서비스 특성상 CRUD 모두 빈번히 일어나지 않�
 
 <br>
 
-스키마는 `users 테이블`과 `noti_group 테이블`이 N:M 관계를 가지기 위해서 중계 테이블인 `noti_group_user 테이블`을 사용했으며, 자동화된 마이그레이션을 위해 Flyway로 관리했습니다.
+스키마는 `users 테이블`과 `noti_group 테이블`이 N:M 관계를 가지기 위해서 중계 테이블인 `noti_group_user 테이블`을 사용했으며, Flyway로 관리했습니다.
 
 
 ```sql
