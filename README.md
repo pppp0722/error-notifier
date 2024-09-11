@@ -1,5 +1,7 @@
 # error-notifier
 
+## 0. 프로젝트 설명 및 목차
+
 > 사용자 알림 그룹 관리 및 실시간 장애 알림 서비스
 
 `error-notifier`는 **알림 대상 목록, 심각도, 장애 내용을 전달 받아 외부 서비스로 장애 알림 메시지를 전송**하기 위한 서비스입니다.
@@ -21,10 +23,11 @@
 
 프로젝트 개발에 사용한 기술 스택은 다음과 같습니다.
 - Language : `Java 21`
-- Framework : `Spring Boot 3.3.3`
+- Framework : `Spring Boot 3.3.3`, `Spring WebFlux`
 - DB : `H2 DB`, `Spring Data JPA`, `Flyway`
-- Test : `JUnit5`, `WireMock`
-- ETC : `Kafka`, `OpenFeign`, `Log4J2`, `Swagger`, `Docker`
+- Test : `JUnit5`
+- MQ : `Spring Kafka`, `Reactor Kafka`
+- ETC : `WebClient`, `Log4J2`, `Swagger`, `Docker`
 
 <br>
 
@@ -98,6 +101,8 @@ curl --location 'http://localhost:8080/v1/alerts' \
 
 장애 알림 메시지 전송 **API 처리량을 높이기 위한 고려**, **서비스 확장에 대한 고려**로 인하여 Message Queue를 사용한 Pub/Sub 모델로 구성했습니다.
 
+Consumer 모듈의 경우 MQ에서 message를 읽고 External Service를 호출하는 역할이기 때문에 Spring WebFlux를 사용한 **비동기 I/O로 처리량 향상**을 도모했습니다.
+
 <br>
 
 시스템의 전체적인 흐름은 다음과 같습니다.
@@ -116,6 +121,18 @@ curl --location 'http://localhost:8080/v1/alerts' \
 - 추가적인 서비스를 추가해 message를 구독하여 **서비스 확장이 가능**합니다.
 
 <br>
+
+또한 과제의 선택 사항을 만족시킬수 있습니다.
+
+> 1. 장애로 인해 외부 오픈 API 응답이 지연되거나 일시적으로 사용할 수 없는 경우, 장애 전파를 막기 위한 기능을 구현하거나 해결 방안에 대해 상세히 기술해주세요.
+>
+> 
+> 2. 외부 오픈 API가 초 당 처리할 수 있는 양이 제한되어있는 경우, 초과하는 외부 오픈 API 요청을 막기 위한 기능을 구현하거나 해결 방안에 대해 상세히 기술해주세요.
+
+1. 외부 오픈 API 응답과 관계 없이 Producer는 에러 알림 message를 발행할 수 있으며, Client는 Producer에 즉각적인 응답을 받을 수 있기 때문에 장애 전파를 막을 수 있습니다.
+
+
+2. Consumer 모듈의 polling 주기를 설정하여 어느정도 제한된 처리량에 맞게 조절할 수 있으며, 만약 정확한 초당 처리량을 지켜야 된다면 Leaky Bucket 알고리즘을 사용하여 Rate Limiter를 구현할 것입니다.
 
 ---
 
@@ -170,6 +187,47 @@ producer
 ---
 
 ## 4. DB 스키마
+
+DB는 장애 알림 서비스 특성상 CRUD 모두 빈번히 일어나지 않고, N:M의 스키마 구조 특성상 중복 데이터를 피하기 위해 RDBMS를 사용했습니다. (H2 DB 사용)
+
+만약 Producer 모듈의 레이턴시가 DB로 인해 증가하거나 DB에 병목이 생긴다면, read-write 분리와 로컬 캐시 혹은 Redis와 같은 분산 캐시 사용으로 해결할 수 있습니다.
+
+<br>
+
+스키마는 `users 테이블`과 `noti_group 테이블`이 N:M 관계를 가지기 위해서 중계 테이블인 `noti_group_user 테이블`을 사용했으며, 자동화된 마이그레이션을 위해 Flyway로 관리했습니다.
+
+
+```sql
+# V1__init.sql
+
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE,
+    token VARCHAR(2048) NOT NULL,
+    channel_id VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE IF NOT EXISTS noti_group (
+    id UUID PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE,
+    desc VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE IF NOT EXISTS noti_group_user (
+    id UUID PRIMARY KEY,
+    noti_group_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (noti_group_id) REFERENCES noti_group(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT unique_combination UNIQUE (noti_group_id, user_id)
+    );
+```
 
 <br>
 
@@ -270,6 +328,19 @@ Response : 200 OK application/json
 
 ## 6. 라이브러리 및 오픈소스 사용 목적
 
+> 기술스택은 [0. 프로젝트 설명 및 목차](#0-프로젝트-설명-및-목차)에 설명되어 있으며, 앞서 충분히 설명된 요소는 생략했습니다. 
+
+### Spring WebFlux
+
+외부 서비스 호출에 중점적인 Consumer 모듈의 특성을 고려하여 성능 향상 및 자원의 효율성을 위해 WebFlux를 사용했습니다.
+
+### Flyway
+
+마이그레이션 자동화 및 DB 스키마 변경 이력을 남기기 위해 사용했습니다.
+
+### Docker
+
+로컬 실행 환경을 단순화 하기 위해 Docker Compose를 사용했습니다.
 
 <br>
 
