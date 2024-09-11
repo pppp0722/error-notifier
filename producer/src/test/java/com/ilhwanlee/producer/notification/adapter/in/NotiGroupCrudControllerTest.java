@@ -47,11 +47,11 @@ class NotiGroupCrudControllerTest extends BaseSpringBootTest {
     }
 
     @Test
-    @DisplayName("NotiGroup을 생성할 때 notiGroupId가 중복되면 409를 응답할 수 있다.")
+    @DisplayName("NotiGroup을 생성할 때 notiGroupName이 중복되면 409를 응답할 수 있다.")
     void save_whenIdIsExists_responseConflict() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/noti-groups")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"test_name1\", \"desc\":\"test_desc\"}"))
+                        .content("{\"name\":\"group_name1\", \"desc\":\"test_desc\"}"))
                 .andExpect(MockMvcResultMatchers.status().isConflict());
     }
 

@@ -9,7 +9,13 @@ dependencies {
     implementation project(':common')
 
     /* Spring */
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    /* Reactor */
+    implementation 'io.projectreactor.kafka:reactor-kafka'
+
+    /* Jackson */
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
 
     /* Mock Server */
     testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock:4.0.4'

@@ -7,14 +7,8 @@ spring:
   profiles:
     default: local
     active: local
-  cloud:
-    openfeign:
-      client:
-        config:
-          slack:
-            url: https://slack.com
-            connect-timeout: 5000
-            read-timeout: 5000
+  jackson:
+    default-property-inclusion: non_null
 
 logging:
   config: classpath:log4j2-local.xml

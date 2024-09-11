@@ -1,12 +1,9 @@
 spring:
   kafka:
     bootstrap-servers: kafka:9092
-  cloud:
-    openfeign:
-      client:
-        config:
-          slack:
-            url: http://mockup:8080
+
+url:
+  slack: http://mockup:8080
 
 logging:
   config: classpath:log4j2-local.xml
