@@ -101,8 +101,6 @@ curl --location 'http://localhost:8080/v1/alerts' \
 
 장애 알림 메시지 전송 **API 처리량을 높이기 위한 고려**, **서비스 확장에 대한 고려**로 인하여 Message Queue를 사용한 Pub/Sub 모델로 구성했습니다.
 
-Consumer 모듈의 경우 MQ에서 message를 읽고 External Service를 호출하는 역할이기 때문에 Spring WebFlux를 사용한 **비동기 I/O로 처리량 향상**을 도모했습니다.
-
 <br>
 
 시스템의 전체적인 흐름은 다음과 같습니다.
