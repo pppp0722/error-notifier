@@ -364,7 +364,7 @@ Response : 200 OK application/json
 
 추후 가상스레드를 사용한 성능 향상의 가능성을 염두에 두어 사용했습니다.
 
-### Spring WebFlux
+### Spring WebFlux & WebClient
 
 외부 서비스 호출에 중점적인 Consumer 모듈의 특성을 고려하여 비동기 I/O를 사용한 성능 향상 및 자원의 효율성을 위해 WebFlux를 사용했습니다.
 
