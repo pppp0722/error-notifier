@@ -4,10 +4,11 @@ import com.ilhwanlee.common.domain.NotiInfo;
 import com.ilhwanlee.consumer.common.properties.UrlProperties;
 import com.ilhwanlee.consumer.notification.adapter.out.web.dto.NotiSendingRequestDto;
 import com.ilhwanlee.consumer.notification.application.out.SendNotiPort;
-import java.io.IOException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -31,9 +32,10 @@ public class WebClientSendNotiAdapter implements SendNotiPort {
                 .header("Authorization", "Bearer " + notiInfo.token())
                 .bodyValue(new NotiSendingRequestDto(notiInfo.channelId(), notiInfo.message()))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, clientResponse -> clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBdoy -> Mono.error(new IOException(errorBdoy))))
-                .bodyToMono(Void.class)
-                .doOnError(Mono::error);
+                .onStatus(HttpStatusCode::is4xxClientError, clientResponse ->
+                        Mono.error(new HttpClientErrorException(clientResponse.statusCode())))
+                .onStatus(HttpStatusCode::is5xxServerError, clientResponse ->
+                        Mono.error(new HttpServerErrorException(clientResponse.statusCode())))
+                .bodyToMono(Void.class);
     }
 }

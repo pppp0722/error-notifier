@@ -344,6 +344,10 @@ Response : 200 OK application/json
 
 로컬 실행 환경을 단순화 하기 위해 Docker Compose를 사용했습니다.
 
+### WireMock
+
+테스트 시 외부 서비스를 mocking하기 위해 사용했습니다.
+
 <br>
 
 ---

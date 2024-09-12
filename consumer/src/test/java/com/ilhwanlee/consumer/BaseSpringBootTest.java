@@ -8,7 +8,7 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest
 @AutoConfigureWireMock(port = 0)
 @TestPropertySource(properties = {
-        "spring.cloud.openfeign.client.config.slack.url=http://localhost:${wiremock.server.port}"
+        "url.slack=http://localhost:${wiremock.server.port}"
 })
 @ActiveProfiles("test")
 public class BaseSpringBootTest {

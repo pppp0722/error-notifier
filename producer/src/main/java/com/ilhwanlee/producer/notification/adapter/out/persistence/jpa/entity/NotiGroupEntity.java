@@ -27,6 +27,7 @@ public class NotiGroupEntity extends BaseEntity {
 
     public static NotiGroupEntity fromDomain(NotiGroup notiGroup) {
         return NotiGroupEntity.builder()
+                .id(notiGroup.getId())
                 .name(notiGroup.getName())
                 .desc(notiGroup.getDesc())
                 .build();

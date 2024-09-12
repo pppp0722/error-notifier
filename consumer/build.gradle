@@ -13,10 +13,11 @@ dependencies {
 
     /* Reactor */
     implementation 'io.projectreactor.kafka:reactor-kafka'
+    testImplementation 'io.projectreactor:reactor-test:3.5.10'
 
     /* Jackson */
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
 
     /* Mock Server */
-    testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock:4.0.4'
+    testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock:4.1.2'
 }
