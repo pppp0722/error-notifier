@@ -93,6 +93,38 @@ curl --location 'http://localhost:8080/v1/alerts' \
 
 <br>
 
+다음 curl을 실행하여 알림 그룹 생성 API를 테스트할 수 있습니다.
+```
+curl --location 'http://localhost:8080/v1/noti-groups' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "test_name",
+    "desc": "test_desc"
+}'
+```
+
+<br>
+
+다음 curl을 실행하여 알림 그룹 가입 및 탈퇴 API를 테스트할 수 있습니다. (순차적 실행)
+```
+curl --location 'http://localhost:8080/v1/noti-groups/subscribe' \
+--header 'Content-Type: application/json' \
+--data '{
+    "notiGroupId": "22222222-2222-2222-2222-222222222222",
+    "userId": "22222222-2222-2222-2222-222222222222"
+}'
+
+curl --location --request DELETE 'http://localhost:8080/v1/noti-groups/unsubscribe' \
+--header 'Content-Type: application/json' \
+--data '{
+    "notiGroupId": "22222222-2222-2222-2222-222222222222",
+    "userId": "22222222-2222-2222-2222-222222222222"
+}'
+```
+
+
+<br>
+
 ---
 
 ## 2. 시스템 아키텍처
